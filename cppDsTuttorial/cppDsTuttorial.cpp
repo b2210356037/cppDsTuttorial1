@@ -47,12 +47,35 @@ node* addAscend(node* r, int x) {
     return r;
 }
 
+node* remove(node* r, int x) {
+    node* temp;
+    node* iter = r;
+
+    if (r->x == x) 
+    {
+        temp = r;
+        r = r->next;
+        free(temp);
+        return r;
+    }
+    while (iter -> next != NULL && iter -> next ->x != x)
+    {
+        iter = iter->next;
+    }
+    if (iter->next == NULL) {
+        printf("The integer: %d has not found\n", x);
+        return r;
+    }
+    temp = iter->next;
+    iter->next = iter->next->next;
+    free(temp);
+    return r;
+}
+
 int main() {
     node* root;
     root = (node*)malloc(sizeof(node));
     //root->x = 500;
-    root = NULL;
-
     //for (int i = 0; i < 5; i++)  //adds nodes to the linkedlist respectively
     //{
     //    add(root, i * 10);
@@ -68,10 +91,15 @@ int main() {
     //temp->next = iter->next;   //add node after the 'iter'
     //iter->next = temp;
     //temp->x = 100;
-    root = NULL;
+    root->x = 20;
+    root->next = NULL;
+    add(root, 25);
+    //root = NULL;
     root = addAscend(root, 15);
     root = addAscend(root, 35);
+    root = remove(root, 20);
     root = addAscend(root, -10);
+    root = remove(root, 999);
     root = addAscend(root, 1450);
 
     print(root);
